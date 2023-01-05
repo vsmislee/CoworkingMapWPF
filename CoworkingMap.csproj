@@ -210,9 +210,6 @@
     <Resource Include="images\Logo.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\place1.PNG" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="images\place2.PNG" />
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +217,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="place2.PNG" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="images\places\6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\places\7.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CoworkingMap"
         mc:Ignorable="d"
-        Title="WindowSelectPlace" Height="296.9" Width="290" WindowStyle="None" Visibility="Visible" Background="{x:Null}" Foreground="{x:Null}" AllowsTransparency="True" ResizeMode="NoResize">
+        Title="WindowSelectPlace" Height="296.9" Width="290" WindowStyle="None" Visibility="Visible" Background="{x:Null}" Foreground="{x:Null}" AllowsTransparency="True" ResizeMode="NoResize" Topmost="True">
     <Grid Margin="0,0,9.8,10">
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="266" Margin="2,1,0,0" VerticalAlignment="Top" Width="247" Background="#FF293240" CornerRadius="8"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="266" Margin="2,1,0,0" VerticalAlignment="Top" Width="247" Background="#FF293240" CornerRadius="8" MouseLeftButtonDown="Border_MouseLeftButtonDown"/>
         <Button Content="Отмена" IsCancel="True" HorizontalAlignment="Left" Margin="171,233,0,0" VerticalAlignment="Top" Width="60" Height="17" Background="White"/>
         <Button x:Name="ButtonOK" IsDefault="True" Content="Ок" HorizontalAlignment="Left" Margin="101,233,0,0" VerticalAlignment="Top" Width="60" Background="White" Height="17" Click="ButtonOk_Click"/>
         <Label Content="Выберите дату с какого числа&#xD;&#xA;собираетесь бронировать:" HorizontalAlignment="Left" Margin="37,10,0,0" VerticalAlignment="Top" Height="46" Width="175" Foreground="#FFFFF4F4"/>

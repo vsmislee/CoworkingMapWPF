@@ -39,7 +39,7 @@ namespace CoworkingMap
                     throw new Exception("Ни один день не выран!");
                 SelectedDatesCollection dates = Calendar1.SelectedDates;
                 DateTime lastday = dates.Last().AddDays(1);
-                MessageBox.Show(dates.First().ToString() + "  " + lastday.ToString());
+                MessageBox.Show("Место номер " + this.placeNumber + " забронировано с " +dates.First().ToString() + " до " + lastday.ToString());
                 this.DialogResult = true;
             }
             catch (Exception ex)
@@ -60,6 +60,11 @@ namespace CoworkingMap
             datePlaceTaked.Start = new DateTime(2023, 1, 7);
             datePlaceTaked.End = new DateTime(2023, 1, 10);
             Calendar1.BlackoutDates.Add(datePlaceTaked);*/
+        }
+
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
         }
 
         /*private void Button_Click_1(object sender, RoutedEventArgs e)

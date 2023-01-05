@@ -62,7 +62,7 @@ namespace CoworkingMap
 
         private void TakePlace(int placeNumber)
         {
-            Window PlaceSelect = new WindowSelectPlace();
+            Window PlaceSelect = new WindowSelectPlace(placeNumber);
             PlaceSelect.Top = Mouse.GetPosition(this).Y;
             PlaceSelect.Left = Mouse.GetPosition(this).X;
             PlaceSelect.ShowDialog();
