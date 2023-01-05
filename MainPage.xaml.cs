@@ -50,6 +50,41 @@ namespace CoworkingMap
             NavigationService.Navigate(new Contacts());
         }
 
+        private void TakePlace(int placeNumber)
+        {
+            Window PlaceSelect = new WindowSelectPlace(placeNumber);
+            PlaceSelect.Top = Mouse.GetPosition(this).Y;
+            PlaceSelect.Left = Mouse.GetPosition(this).X;
+            PlaceSelect.ShowDialog();
+        }
+
+        BitmapImage ChooseSource(int placeNumber)
+        {
+            BitmapImage bit = new BitmapImage();
+            string source;
+            if (true)//проверка занято ли место
+            {
+                source = "images/places/" + placeNumber.ToString() + ".PNG";
+                bit.BeginInit();
+                bit.UriSource = new Uri(source, UriKind.Relative);
+                bit.EndInit();
+            }
+            else
+            {
+                source = "images/places/" + placeNumber.ToString() + "blue.PNG";
+                bit.BeginInit();
+                bit.UriSource = new Uri(source, UriKind.Relative);
+                bit.EndInit();
+            }
+            return bit;
+        }
+
+        private void Image_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            ImagePlace1.Source = ChooseSource(1);
+        }
+
         private void ImagePlace1_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             TakePlace(1);
@@ -60,12 +95,34 @@ namespace CoworkingMap
             TakePlace(2);
         }
 
-        private void TakePlace(int placeNumber)
+        private void ImagePlace3_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Window PlaceSelect = new WindowSelectPlace(placeNumber);
-            PlaceSelect.Top = Mouse.GetPosition(this).Y;
-            PlaceSelect.Left = Mouse.GetPosition(this).X;
-            PlaceSelect.ShowDialog();
+            TakePlace(3);
+        }
+
+        private void ImagePlace4_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            TakePlace(4);
+        }
+
+        private void ImagePlace5_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            TakePlace(5);
+        }
+
+        private void ImagePlace6_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            TakePlace(6);
+        }
+
+        private void ImagePlace7_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            TakePlace(7);
+        }
+
+        private void ImagePlace8_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            TakePlace(8);
         }
     }
 }

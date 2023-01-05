@@ -99,6 +99,7 @@
     <Compile Include="WindowSelectPlace.xaml.cs">
       <DependentUpon>WindowSelectPlace.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WorkPlace.cs" />
     <Page Include="Authorization.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -218,12 +219,62 @@
   <ItemGroup>
     <Resource Include="place2.PNG" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="images\place1.PNG" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="images\places\6.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\places\7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\places\1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\places\1blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\places\2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\places\2blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\places\3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\places\3blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\places\4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\places\4blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\places\5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\places\5blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\places\6blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\places\7blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\places\8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\places\9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\places\8blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\places\9blue.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
