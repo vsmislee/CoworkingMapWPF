@@ -20,9 +20,20 @@ namespace CoworkingMap
     /// </summary>
     public partial class MainPage : Page
     {
+        int size = 8;
+        WorkPlace[] Places; // думаю будут инициализироваться из базы
+
         public MainPage()
         {
             InitializeComponent();
+            Places = new WorkPlace[size];
+            for (int i = 0; i < size; i++)// пока без базы для проверки
+            {
+                Places[i] = new WorkPlace();
+                Places[i].Number = i+1;
+            }
+            Places[0].Taked = true;
+            Places[6].Taked = true;
         }
 
         private void main(object sender, RoutedEventArgs e)
@@ -58,71 +69,25 @@ namespace CoworkingMap
             PlaceSelect.ShowDialog();
         }
 
-        BitmapImage ChooseSource(int placeNumber)
-        {
-            BitmapImage bit = new BitmapImage();
-            string source;
-            if (true)//проверка занято ли место
-            {
-                source = "images/places/" + placeNumber.ToString() + ".PNG";
-                bit.BeginInit();
-                bit.UriSource = new Uri(source, UriKind.Relative);
-                bit.EndInit();
-            }
-            else
-            {
-                source = "images/places/" + placeNumber.ToString() + "blue.PNG";
-                bit.BeginInit();
-                bit.UriSource = new Uri(source, UriKind.Relative);
-                bit.EndInit();
-            }
-            return bit;
-        }
-
         private void Image_Loaded(object sender, RoutedEventArgs e)
         {
+            ImagePlace1.Source = Places[0].ChooseImage();
+            ImagePlace2.Source = Places[1].ChooseImage();
+            ImagePlace3.Source = Places[2].ChooseImage();
+            ImagePlace4.Source = Places[3].ChooseImage();
+            ImagePlace5.Source = Places[4].ChooseImage();
+            ImagePlace6.Source = Places[5].ChooseImage();
+            ImagePlace7.Source = Places[6].ChooseImage();
+            ImagePlace8.Source = Places[7].ChooseImage();
 
-            ImagePlace1.Source = ChooseSource(1);
         }
 
-        private void ImagePlace1_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void ImagePlace_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            TakePlace(1);
+            Image im = (Image)e.Source;
+            int placeNumber = int.Parse(im.Name.Last().ToString());
+            TakePlace(placeNumber);
         }
-
-        private void ImagePlace2_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            TakePlace(2);
-        }
-
-        private void ImagePlace3_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            TakePlace(3);
-        }
-
-        private void ImagePlace4_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            TakePlace(4);
-        }
-
-        private void ImagePlace5_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            TakePlace(5);
-        }
-
-        private void ImagePlace6_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            TakePlace(6);
-        }
-
-        private void ImagePlace7_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            TakePlace(7);
-        }
-
-        private void ImagePlace8_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            TakePlace(8);
-        }
+       
     }
 }
