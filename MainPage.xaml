@@ -38,7 +38,7 @@
 
                 </Grid>
             </Viewbox>
-            <Image HorizontalAlignment="Left" Height="292" Margin="25,133,0,0" VerticalAlignment="Top" Width="601" Source="images/ofmap1.jpg" Loaded="Image_Loaded"/>
+            <Image x:Name="ImageMap" HorizontalAlignment="Left" Height="292" Margin="25,133,0,0" VerticalAlignment="Top" Width="601" Source="images/ofmap1.jpg" Loaded="ImageMap_Loaded"/>
             <Canvas HorizontalAlignment="Left" Height="62" Margin="676,363,0,0" VerticalAlignment="Top"/>
             <Image x:Name="ImagePlace1" HorizontalAlignment="Left" Height="19" Margin="34,318,0,0" VerticalAlignment="Top" Width="19"  Source="images/places/1.PNG" Cursor="Hand" MouseLeftButtonUp="ImagePlace_MouseLeftButtonUp"/>
             <Image x:Name="ImagePlace2" HorizontalAlignment="Left" Height="19" Margin="132,142,0,0" VerticalAlignment="Top" Width="19" Source="images/places/2.PNG" Cursor="Hand" MouseLeftButtonUp="ImagePlace_MouseLeftButtonUp"/>

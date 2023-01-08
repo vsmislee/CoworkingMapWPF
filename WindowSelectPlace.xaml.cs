@@ -37,10 +37,10 @@ namespace CoworkingMap
             {
                 if (Calendar1.SelectedDates.Count == 0)
                     throw new Exception("Ни один день не выран!");
-                SelectedDatesCollection dates = Calendar1.SelectedDates;
-                DateTime lastday = dates.Last().AddDays(1);
-                place.Take(); // пока ничего не делает
-                MessageBox.Show("Место номер " + place.Number + " забронировано с " +dates.First().ToString() + " до " + lastday.ToString());
+                SelectedDatesCollection Dates = Calendar1.SelectedDates;
+                CalendarDateRange TakedDates = new CalendarDateRange(Dates.First(), Dates.Last().AddMinutes(1439));
+                place.Take(TakedDates);
+                MessageBox.Show("Место номер " + place.Number + " забронировано с " +TakedDates.Start.ToString() + " до " + TakedDates.End.ToString());
                 this.DialogResult = true;
             }
             catch (Exception ex)

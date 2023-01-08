@@ -11,14 +11,12 @@ namespace CoworkingMap
     public class WorkPlace
     {
         int number;
-        bool taked;
         int userid;
         List<CalendarDateRange> takedDates;
 
         public WorkPlace()
         {
             number = 0;
-            taked = false;
             userid = 0;
             takedDates = new List<CalendarDateRange>();
         }
@@ -26,12 +24,6 @@ namespace CoworkingMap
         {
             get { return this.number; }
             set { number = value; }
-        }
-
-        public bool Taked
-        {
-            get { return this.taked; }
-            set { this.taked = value; }
         }
 
         public int UserID
@@ -48,25 +40,21 @@ namespace CoworkingMap
         public bool IsTaked()
         {
             foreach (CalendarDateRange item in takedDates)
-            {
-                if (DateTime.Today < item.End && DateTime.Today > item.Start)
-                {
+                if (DateTime.Today <= item.End && DateTime.Today >= item.Start)
                     return true;
-                }
-            }
             return false;
         }
 
-        public void AddTakedDate(CalendarDateRange takedDate)
+        public void Take(CalendarDateRange takedDate)
         {
             if (this.takedDates == null)
                 takedDates = new List<CalendarDateRange>();
             foreach (CalendarDateRange item in takedDates)
             {
-                if (item == takedDate)
+                if (takedDate.Start < item.Start && takedDate.End > item.Start)
                     throw new Exception("Время брони уже занято.");
-                //тут ещё нужно добавлять в базу
             }
+            //тут ещё нужно добавлять в базу
             takedDates.Add(takedDate);
         }
 
@@ -74,16 +62,16 @@ namespace CoworkingMap
         {
             BitmapImage bit = new BitmapImage();
             string source;
-            if (!this.Taked)//проверка занято ли место
+            if (!this.IsTaked())
             {
-                source = "images/places/" + this.number.ToString() + ".PNG";
+                source = "images/places/" + number.ToString() + ".PNG";
                 bit.BeginInit();
                 bit.UriSource = new Uri(source, UriKind.Relative);
                 bit.EndInit();
             }
             else
             {
-                source = "images/places/" + this.Number.ToString() + "blue.PNG";
+                source = "images/places/" + number.ToString() + "blue.PNG";
                 bit.BeginInit();
                 bit.UriSource = new Uri(source, UriKind.Relative);
                 bit.EndInit();
@@ -91,9 +79,5 @@ namespace CoworkingMap
             return bit;
         }
 
-        public void Take()
-        {
-           
-        }
     }
 }

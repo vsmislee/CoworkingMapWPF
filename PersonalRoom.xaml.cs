@@ -23,6 +23,7 @@ namespace CoworkingMap
         public PersonalRoom()
         {
             InitializeComponent();
+            //MessageBox.Show(MainPage.User.login);
         }
         private void main(object sender, RoutedEventArgs e)
         {

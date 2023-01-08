@@ -39,7 +39,8 @@ namespace CoworkingMap
                 }
                 if (AuthUser != null)
                 {
-                    NavigationService.Navigate(new MainPage(AuthUser));
+                    MainPage.User = AuthUser;
+                    NavigationService.Navigate(new MainPage());
                 }
                 else
                     throw new Exception("Неверный логин или пароль.");

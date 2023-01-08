@@ -12,13 +12,13 @@ namespace CoworkingMap
         public string login, password;
         public string Login
         {
-            get { return login; }
-            set { login = value; }
+            get { return this.login; }
+            set { this.login = value; }
         }
         public string Password
         {
-            get { return login; }
-            set { login = value; }
+            get { return this.password; }
+            set { this.password = value; }
         }
         public User() { }
         public User(string login, string password)
