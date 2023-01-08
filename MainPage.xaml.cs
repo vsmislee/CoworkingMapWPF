@@ -22,23 +22,27 @@ namespace CoworkingMap
     {
         int size = 8;
         WorkPlace[] Places; // думаю будут инициализироваться из базы
+        User user;
 
-        public MainPage()
+        public MainPage(User user)// в параметры юзера
         {
             InitializeComponent();
             Places = new WorkPlace[size];
+            this.user = user;
             for (int i = 0; i < size; i++)// пока без базы для проверки
             {
                 Places[i] = new WorkPlace();
                 Places[i].Number = i+1;
             }
             Places[0].Taked = true;
+            Places[0].AddTakedDate(new CalendarDateRange(new DateTime(2023, 1, 10), new DateTime(2023, 1, 15)));
+            Places[0].AddTakedDate(new CalendarDateRange(new DateTime(2023, 1, 20), new DateTime(2023, 1, 21)));
             Places[6].Taked = true;
         }
 
         private void main(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new MainPage());
+            NavigationService.Navigate(new MainPage(user));
         }
 
         private void Maintoroom(object sender, RoutedEventArgs e)
@@ -60,10 +64,9 @@ namespace CoworkingMap
         {
             NavigationService.Navigate(new Contacts());
         }
-
-        private void TakePlace(int placeNumber)
+        public void TakePlace(WorkPlace place)
         {
-            Window PlaceSelect = new WindowSelectPlace(placeNumber);
+            Window PlaceSelect = new WindowSelectPlace(place);
             PlaceSelect.Top = Mouse.GetPosition(this).Y;
             PlaceSelect.Left = Mouse.GetPosition(this).X;
             PlaceSelect.ShowDialog();
@@ -86,7 +89,7 @@ namespace CoworkingMap
         {
             Image im = (Image)e.Source;
             int placeNumber = int.Parse(im.Name.Last().ToString());
-            TakePlace(placeNumber);
+            TakePlace(Places[placeNumber-1]);
         }
        
     }

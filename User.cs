@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CoworkingMap
 {
-    internal class User
+    public class User
     {
         public int id { get; set; }
         public string login, password;

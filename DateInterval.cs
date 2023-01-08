@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CoworkingMap
 {
-    class DateInterval
+    public class DateInterval
     {
         DateTime begin;
         DateTime end;

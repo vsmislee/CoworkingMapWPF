@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Media.Imaging;
+using System.Windows.Controls;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CoworkingMap
 {
-    class WorkPlace
+    public class WorkPlace
     {
         int number;
         bool taked;
         int userid;
-        List <DateInterval> takedDates;
-        //время занятости .. сделать структуру для даты: начало брони и конец.. потом сделать список этих структур и отметить их в календаре
+        List<CalendarDateRange> takedDates;
 
         public WorkPlace()
         {
             number = 0;
             taked = false;
             userid = 0;
-            takedDates = null;
+            takedDates = new List<CalendarDateRange>();
         }
         public int Number
         {
@@ -40,16 +40,16 @@ namespace CoworkingMap
             set { this.userid = value; }
         }
 
-        public List<DateInterval> TakedDates
+        public List<CalendarDateRange> TakedDates
         {
             get { return this.takedDates; }
             set { this.takedDates = value; }
         }
         public bool IsTaked()
         {
-            foreach (DateInterval item in takedDates)
+            foreach (CalendarDateRange item in takedDates)
             {
-                if (item.IsIn(DateTime.Today))
+                if (DateTime.Today < item.End && DateTime.Today > item.Start)
                 {
                     return true;
                 }
@@ -57,17 +57,17 @@ namespace CoworkingMap
             return false;
         }
 
-        public void AddTakedDate(DateInterval takedDate)
+        public void AddTakedDate(CalendarDateRange takedDate)
         {
             if (this.takedDates == null)
-                takedDates = new List<DateInterval>();
-            foreach (DateInterval item in takedDates)
+                takedDates = new List<CalendarDateRange>();
+            foreach (CalendarDateRange item in takedDates)
             {
                 if (item == takedDate)
                     throw new Exception("Время брони уже занято.");
-                takedDates.Add(takedDate);
                 //тут ещё нужно добавлять в базу
             }
+            takedDates.Add(takedDate);
         }
 
         public BitmapImage ChooseImage()
@@ -89,6 +89,11 @@ namespace CoworkingMap
                 bit.EndInit();
             }
             return bit;
+        }
+
+        public void Take()
+        {
+           
         }
     }
 }

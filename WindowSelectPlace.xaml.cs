@@ -19,16 +19,16 @@ namespace CoworkingMap
     /// </summary>
     public partial class WindowSelectPlace : Window
     {
-        int placeNumber;
+        WorkPlace place;
         public WindowSelectPlace()
         {
             InitializeComponent();
         }
 
-        public WindowSelectPlace(int placeNumber)
+        public WindowSelectPlace(WorkPlace place)
         {
             InitializeComponent();
-            this.placeNumber = placeNumber;
+            this.place = place;
         }
 
         private void ButtonOk_Click(object sender, RoutedEventArgs e)
@@ -39,7 +39,8 @@ namespace CoworkingMap
                     throw new Exception("Ни один день не выран!");
                 SelectedDatesCollection dates = Calendar1.SelectedDates;
                 DateTime lastday = dates.Last().AddDays(1);
-                MessageBox.Show("Место номер " + this.placeNumber + " забронировано с " +dates.First().ToString() + " до " + lastday.ToString());
+                place.Take(); // пока ничего не делает
+                MessageBox.Show("Место номер " + place.Number + " забронировано с " +dates.First().ToString() + " до " + lastday.ToString());
                 this.DialogResult = true;
             }
             catch (Exception ex)
@@ -55,11 +56,17 @@ namespace CoworkingMap
             Calendar1.DisplayDateEnd = new DateTime(2023, 12, 31);
             Calendar1.FirstDayOfWeek = DayOfWeek.Monday;
 
-            //закрашивание дней которые заняты
-            /*CalendarDateRange datePlaceTaked = new CalendarDateRange();
-            datePlaceTaked.Start = new DateTime(2023, 1, 7);
-            datePlaceTaked.End = new DateTime(2023, 1, 10);
-            Calendar1.BlackoutDates.Add(datePlaceTaked);*/
+            //закрашивание дней до сегодня
+            CalendarDateRange InactiveDates = new CalendarDateRange();
+            InactiveDates.Start = (DateTime)Calendar1.DisplayDateStart;
+            InactiveDates.End = DateTime.Today.AddDays(-1);
+            Calendar1.BlackoutDates.Add(InactiveDates);
+
+            //закрашивание занятых дней
+            foreach (CalendarDateRange item in place.TakedDates)
+            {
+                Calendar1.BlackoutDates.Add(item);
+            }
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
