@@ -39,7 +39,8 @@ namespace CoworkingMap
                 }
                 if (AuthUser != null)
                 {
-                    MainPage.User = AuthUser;
+                    MainPage.User = AuthUser; 
+                    // тут должна быть проверка пользователь или админ и грузить соответственное окно
                     NavigationService.Navigate(new MainPage());
                 }
                 else

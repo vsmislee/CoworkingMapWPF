@@ -96,6 +96,9 @@
       <DependentUpon>Stats.xaml</DependentUpon>
     </Compile>
     <Compile Include="User.cs" />
+    <Compile Include="WindowAddPlace.xaml.cs">
+      <DependentUpon>WindowAddPlace.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowSelectPlace.xaml.cs">
       <DependentUpon>WindowSelectPlace.xaml</DependentUpon>
     </Compile>
@@ -150,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Stats.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowAddPlace.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -211,16 +218,7 @@
     <Resource Include="images\Logo.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\place2.PNG" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="images\ofmap1.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="place2.PNG" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="images\place1.PNG" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\places\6.png" />

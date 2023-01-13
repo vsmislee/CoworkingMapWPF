@@ -9,7 +9,7 @@ namespace CoworkingMap
     public class User
     {
         public int id { get; set; }
-        public string login, password;
+        string login, password;
         public string Login
         {
             get { return this.login; }
@@ -20,9 +20,11 @@ namespace CoworkingMap
             get { return this.password; }
             set { this.password = value; }
         }
+
         public User() { }
-        public User(string login, string password)
+        public User(int id, string login, string password)
         {
+            this.id = id;
             this.login = login;
             this.password = password;
         }

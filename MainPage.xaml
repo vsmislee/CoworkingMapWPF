@@ -10,7 +10,7 @@
 
     <Viewbox Stretch="Fill">
 
-        <Grid Background="White" Height="450" Width="800">
+        <Grid x:Name="MainGrid" Background="White" Height="450" Width="800">
             <Viewbox Margin="10,19,95,322" Stretch="Fill">
                 <Grid Height="109" Width="695">
                     <StatusBar Margin="0,41,0,0" Background="White">
@@ -38,7 +38,13 @@
 
                 </Grid>
             </Viewbox>
-            <Image x:Name="ImageMap" HorizontalAlignment="Left" Height="292" Margin="25,133,0,0" VerticalAlignment="Top" Width="601" Source="images/ofmap1.jpg" Loaded="ImageMap_Loaded"/>
+            <Image x:Name="ImageMap" HorizontalAlignment="Left" Height="292" Margin="25,133,0,0" VerticalAlignment="Top" Width="601" Source="images/ofmap1.jpg" Loaded="ImageMap_Loaded" >
+                <Image.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Добавить место" Click="MenuMapItem_Click"></MenuItem>
+                    </ContextMenu>
+                </Image.ContextMenu>
+            </Image>
             <Canvas HorizontalAlignment="Left" Height="62" Margin="676,363,0,0" VerticalAlignment="Top"/>
             <Image x:Name="ImagePlace1" HorizontalAlignment="Left" Height="19" Margin="34,318,0,0" VerticalAlignment="Top" Width="19"  Source="images/places/1.PNG" Cursor="Hand" MouseLeftButtonUp="ImagePlace_MouseLeftButtonUp"/>
             <Image x:Name="ImagePlace2" HorizontalAlignment="Left" Height="19" Margin="132,142,0,0" VerticalAlignment="Top" Width="19" Source="images/places/2.PNG" Cursor="Hand" MouseLeftButtonUp="ImagePlace_MouseLeftButtonUp"/>

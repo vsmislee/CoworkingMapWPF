@@ -39,7 +39,7 @@ namespace CoworkingMap
                     throw new Exception("Ни один день не выран!");
                 SelectedDatesCollection Dates = Calendar1.SelectedDates;
                 CalendarDateRange TakedDates = new CalendarDateRange(Dates.First(), Dates.Last().AddMinutes(1439));
-                place.Take(TakedDates);
+                place.Take(TakedDates, MainPage.User);
                 MessageBox.Show("Место номер " + place.Number + " забронировано с " +TakedDates.Start.ToString() + " до " + TakedDates.End.ToString());
                 this.DialogResult = true;
             }
@@ -73,10 +73,5 @@ namespace CoworkingMap
         {
             this.DragMove();
         }
-
-        /*private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }*/
     }
 }

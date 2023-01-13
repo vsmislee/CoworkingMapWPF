@@ -24,6 +24,7 @@ namespace CoworkingMap
         WorkPlace[] Places; // думаю будут инициализироваться из базы
         //User user;
         static User user;
+        List<Image> PlacesImages;
 
         public MainPage()
         {
@@ -34,9 +35,9 @@ namespace CoworkingMap
                 Places[i] = new WorkPlace();
                 Places[i].Number = i + 1;
             }
-            Places[0].Take(new CalendarDateRange(new DateTime(2023, 1, 8), new DateTime(2023, 1, 12)));
-            Places[0].Take(new CalendarDateRange(new DateTime(2023, 1, 20), new DateTime(2023, 1, 21)));
-            Places[6].Take(new CalendarDateRange(new DateTime(2023, 1, 7), new DateTime(2023, 1, 18)));
+            Places[0].Take(new CalendarDateRange(new DateTime(2023, 1, 8), new DateTime(2023, 1, 12)), User);
+            Places[0].Take(new CalendarDateRange(new DateTime(2023, 1, 20), new DateTime(2023, 1, 21)), User);
+            Places[6].Take(new CalendarDateRange(new DateTime(2023, 1, 7), new DateTime(2023, 1, 18)), User);
         }
 
         public static User User
@@ -87,7 +88,13 @@ namespace CoworkingMap
             ImagePlace6.Source = Places[5].ChooseImage();
             ImagePlace7.Source = Places[6].ChooseImage();
             ImagePlace8.Source = Places[7].ChooseImage();
+            
+            //идти по всем местам и создавать им соответствующий image 
 
+           /* ImageMap.ContextMenu = new ContextMenu();
+            MenuItem menuItem = new MenuItem();
+            menuItem.Header = "Добавить место";
+            ImageMap.ContextMenu.Items.Add(menuItem);*/
         }
 
         private void ImagePlace_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -97,6 +104,18 @@ namespace CoworkingMap
             TakePlace(Places[placeNumber-1]);
             im.Source = Places[placeNumber - 1].ChooseImage();
         }
-       
+
+        private void MenuMapItem_Click(object sender, RoutedEventArgs e)
+        {
+            Window PlaceAdd = new WindowAddPlace(MainGrid);
+            PlaceAdd.ShowDialog();
+        }
+
+        private void CreateImage(WorkPlace place)
+        {
+            Image im = new Image();
+            im.Margin = new Thickness(place.MarginLeft, place.MarginUp, 0, 0);
+            im.Source = place.ChooseImage();
+        }
     }
 }
