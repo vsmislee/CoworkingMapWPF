@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Input;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,19 +15,30 @@ namespace CoworkingMap
         int number;
         int userid;
         List<CalendarDateRange> takedDates;
-        int marginUp;
-        int marginLeft;
-        static int width = 19;
-        static int height = 19;
+        double marginUp;
+        double marginLeft;
+        static readonly int width = 19;
+        static readonly int height = 19;
         //Margin
         public WorkPlace()
         {
             number = 0;
             userid = 0;
             takedDates = new List<CalendarDateRange>();
+            this.marginUp = 100;
+            this.marginLeft = 100;
         }
 
-        public WorkPlace(int number, int marginUp, int marginLeft)
+        public WorkPlace(int number)
+        {
+            this.number = number;
+            userid = 0;
+            takedDates = new List<CalendarDateRange>();
+            this.marginUp = 100;
+            this.marginLeft = 100;
+        }
+
+        public WorkPlace(int number, double marginUp, double marginLeft)
         {
             this.number = number;
             userid = 0;
@@ -52,14 +64,24 @@ namespace CoworkingMap
             set { this.takedDates = value; }
         }
 
-        public int MarginUp
+        public double MarginUp
         {
             get { return this.marginUp; }
         }
 
-        public int MarginLeft
+        public double MarginLeft
         {
             get { return this.marginLeft; }
+        }
+
+        public int Width
+        {
+            get { return width; }
+        }
+
+        public int Height
+        {
+            get { return height; }
         }
         public bool IsTaked()
         {
@@ -102,17 +124,5 @@ namespace CoworkingMap
             }
             return bit;
         }
-
-        public void CreateImage(Grid grid)
-        {
-            Image im = new Image();
-            im.Margin = new Thickness(this.MarginLeft, this.MarginUp, 0, 0);
-            im.Width = WorkPlace.width;
-            im.Height = WorkPlace.height;
-            im.HorizontalAlignment = HorizontalAlignment.Left;
-            im.Source = this.ChooseImage();
-            grid.Children.Add(im);
-        }
-
     }
 }

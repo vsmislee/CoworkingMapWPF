@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,14 +22,21 @@ namespace CoworkingMap
     public partial class MainPage : Page
     {
         int size = 8;
-        WorkPlace[] Places; // думаю будут инициализироваться из базы
+        WorkPlace[] Places; // временная штука для тестов
+        ArrayList WorkPlaces; //думаю будет инициалиироваться из базы
         //User user;
         static User user;
-        List<Image> PlacesImages;
 
         public MainPage()
         {
             InitializeComponent();
+            WorkPlaces = new ArrayList();
+            for (int i = 0; i < size; i++)
+            {
+                WorkPlace wp = new WorkPlace(i+1);
+                WorkPlaces.Add(wp);
+                
+            }
             Places = new WorkPlace[size];
             for (int i = 0; i < size; i++)// пока без базы для проверки
             {
@@ -88,34 +96,52 @@ namespace CoworkingMap
             ImagePlace6.Source = Places[5].ChooseImage();
             ImagePlace7.Source = Places[6].ChooseImage();
             ImagePlace8.Source = Places[7].ChooseImage();
-            
-            //идти по всем местам и создавать им соответствующий image 
 
-           /* ImageMap.ContextMenu = new ContextMenu();
-            MenuItem menuItem = new MenuItem();
-            menuItem.Header = "Добавить место";
-            ImageMap.ContextMenu.Items.Add(menuItem);*/
+            //идqи по всем местам и создавать им соответствующий image 
+            // тут должно быть так:
+            /*foreach (WorkPlace item in WorkPlaces)
+            {
+                CreateImage(item);
+            }*/
         }
 
         private void ImagePlace_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Image im = (Image)e.Source;
-            int placeNumber = int.Parse(im.Name.Last().ToString());
-            TakePlace(Places[placeNumber-1]);
-            im.Source = Places[placeNumber - 1].ChooseImage();
+            try
+            {
+                Image im = (Image)e.Source;
+                int placeNumber = int.Parse(im.Name.Last().ToString());
+                TakePlace(WorkPlaces[placeNumber - 1] as WorkPlace);
+                im.Source = (WorkPlaces[placeNumber - 1] as WorkPlace).ChooseImage();
+            }
+            catch (ArgumentOutOfRangeException ex) 
+            {
+                MessageBox.Show(ex.Message + " " + ex.ParamName);
+            }
+            //MessageBox.Show(e.Source.ToString());
         }
 
         private void MenuMapItem_Click(object sender, RoutedEventArgs e)
         {
-            Window PlaceAdd = new WindowAddPlace(MainGrid);
+            Window PlaceAdd = new WindowAddPlace(this);
             PlaceAdd.ShowDialog();
         }
 
-        private void CreateImage(WorkPlace place)
+        public void CreateImage(WorkPlace place)
         {
             Image im = new Image();
             im.Margin = new Thickness(place.MarginLeft, place.MarginUp, 0, 0);
+            im.Width = place.Width;
+            im.Height = place.Height;
+            im.HorizontalAlignment = HorizontalAlignment.Left;
             im.Source = place.ChooseImage();
+            im.Cursor = Cursors.Hand;
+            im.Name = "ImagePlace" + place.Number.ToString();
+            im.MouseLeftButtonUp += ImagePlace_MouseLeftButtonUp;
+            // еще нужно добавить контекстное меню
+
+            WorkPlaces.Add(place);
+            MainGrid.Children.Add(im);
         }
     }
 }

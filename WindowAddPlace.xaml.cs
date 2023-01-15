@@ -19,25 +19,26 @@ namespace CoworkingMap
     /// </summary>
     public partial class WindowAddPlace : Window
     {
-        Grid grid;
+        MainPage mainPage;
         public WindowAddPlace()
         {
             InitializeComponent();
         }
 
-        public WindowAddPlace(Grid grid)
+        public WindowAddPlace(MainPage mainPage)
         {
             InitializeComponent();
-            this.grid = grid;
+            this.mainPage = mainPage;
         }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("aboba");
-            //тут добавляем место в базу
             int number = int.Parse(TextBoxNumber.Text);
-            WorkPlace addPlace = new WorkPlace(number, 100, 100);
-            addPlace.CreateImage(grid);
+            double marginUp = mainPage.MainGrid.Height / 2;
+            double marginLeft = mainPage.MainGrid.Width / 2;
+            WorkPlace addPlace = new WorkPlace(number, marginUp, marginLeft);
+            //тут нужно добавлять место в базу
+            mainPage.CreateImage(addPlace);
             this.DialogResult = true;
         }
     }

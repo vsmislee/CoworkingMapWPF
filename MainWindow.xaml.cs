@@ -22,8 +22,15 @@ namespace CoworkingMap
     {
         public MainWindow()
         {
-            InitializeComponent();
-            MainFrame.Content = new Authorization();
+            try
+            {
+                InitializeComponent();
+                MainFrame.Content = new Authorization();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
