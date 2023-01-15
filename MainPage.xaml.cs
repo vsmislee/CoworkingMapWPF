@@ -123,7 +123,9 @@ namespace CoworkingMap
 
         private void MenuMapItem_Click(object sender, RoutedEventArgs e)
         {
-            Window PlaceAdd = new WindowAddPlace(this);
+            Point MousePos = new Point();
+            MousePos = Mouse.GetPosition(MainGrid);
+            Window PlaceAdd = new WindowAddPlace(this, MousePos);
             PlaceAdd.ShowDialog();
         }
 
@@ -134,14 +136,36 @@ namespace CoworkingMap
             im.Width = place.Width;
             im.Height = place.Height;
             im.HorizontalAlignment = HorizontalAlignment.Left;
+            im.VerticalAlignment = VerticalAlignment.Top;
             im.Source = place.ChooseImage();
             im.Cursor = Cursors.Hand;
             im.Name = "ImagePlace" + place.Number.ToString();
             im.MouseLeftButtonUp += ImagePlace_MouseLeftButtonUp;
-            // еще нужно добавить контекстное меню
+            MakeContextMenu(im);
 
             WorkPlaces.Add(place);
             MainGrid.Children.Add(im);
+        }
+
+        private void MakeContextMenu(Image im)
+        {
+            ContextMenu contextMenu = new ContextMenu();
+            //изменить
+            //переместить
+            MenuItem menuItem1 = new MenuItem();
+            menuItem1.Header = "Изменить";
+            MenuItem menuItem2 = new MenuItem();
+            menuItem2.Header = "Переместить";
+            menuItem2.Click += ImagePlaceContextMenuPositionChangeClick;
+            contextMenu.Items.Add(menuItem1);
+            contextMenu.Items.Add(menuItem2);
+            im.ContextMenu = contextMenu;
+        }
+
+        private void ImagePlaceContextMenuPositionChangeClick(object sender, RoutedEventArgs e)
+        {
+            ContextMenu cs = (e.Source as MenuItem).Parent as ContextMenu;
+            Image im = cs.PlacementTarget as Image;
         }
     }
 }

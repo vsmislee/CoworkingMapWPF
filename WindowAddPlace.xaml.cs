@@ -20,23 +20,37 @@ namespace CoworkingMap
     public partial class WindowAddPlace : Window
     {
         MainPage mainPage;
+        Point mousePosition;
         public WindowAddPlace()
         {
             InitializeComponent();
         }
 
-        public WindowAddPlace(MainPage mainPage)
+        public WindowAddPlace(MainPage mainPage, Point mousePosition)
         {
             InitializeComponent();
             this.mainPage = mainPage;
+            this.mousePosition = mousePosition;
         }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            int number = int.Parse(TextBoxNumber.Text);
-            double marginUp = mainPage.MainGrid.Height / 2;
-            double marginLeft = mainPage.MainGrid.Width / 2;
-            WorkPlace addPlace = new WorkPlace(number, marginUp, marginLeft);
+            // место должно загружаться из базы, если нет места в базе, т е добавляем новое - по расположению мыши
+            WorkPlace addPlace;
+            int number;
+            double marginUp;
+            double marginLeft;
+            if (false) //есть ли в базе
+            {
+
+            }
+            else // если нет
+            {
+                number = int.Parse(TextBoxNumber.Text);
+                marginUp = mousePosition.Y - 12;
+                marginLeft = mousePosition.X - 10;
+                addPlace = new WorkPlace(number, marginUp, marginLeft);
+            }
             //тут нужно добавлять место в базу
             mainPage.CreateImage(addPlace);
             this.DialogResult = true;
