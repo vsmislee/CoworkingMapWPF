@@ -48,7 +48,7 @@ namespace CoworkingMap
             {
                 number = int.Parse(TextBoxNumber.Text);
                 marginUp = mousePosition.Y - 12;
-                marginLeft = mousePosition.X - 10;
+                marginLeft = mousePosition.X - 14;
                 addPlace = new WorkPlace(number, marginUp, marginLeft);
             }
             //тут нужно добавлять место в базу

@@ -36,7 +36,10 @@ namespace CoworkingMap
             try
             {
                 if (Calendar1.SelectedDates.Count == 0)
+                {
                     throw new Exception("Ни один день не выран!");
+                }
+
                 SelectedDatesCollection Dates = Calendar1.SelectedDates;
                 CalendarDateRange TakedDates = new CalendarDateRange(Dates.First(), Dates.Last().AddMinutes(1439));
                 place.Take(TakedDates, MainPage.User);

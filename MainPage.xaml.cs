@@ -22,30 +22,22 @@ namespace CoworkingMap
     public partial class MainPage : Page
     {
         int size = 8;
-        WorkPlace[] Places; // временная штука для тестов
-        ArrayList WorkPlaces; //думаю будет инициалиироваться из базы
-        //User user;
+        List<WorkPlace> Places; //думаю будет инициалиироваться из базы
         static User user;
 
         public MainPage()
         {
             InitializeComponent();
-            WorkPlaces = new ArrayList();
+            Places = new List<WorkPlace>();
             for (int i = 0; i < size; i++)
             {
                 WorkPlace wp = new WorkPlace(i+1);
-                WorkPlaces.Add(wp);
+                Places.Add(wp);
                 
-            }
-            Places = new WorkPlace[size];
-            for (int i = 0; i < size; i++)// пока без базы для проверки
-            {
-                Places[i] = new WorkPlace();
-                Places[i].Number = i + 1;
             }
             Places[0].Take(new CalendarDateRange(new DateTime(2023, 1, 8), new DateTime(2023, 1, 12)), User);
             Places[0].Take(new CalendarDateRange(new DateTime(2023, 1, 20), new DateTime(2023, 1, 21)), User);
-            Places[6].Take(new CalendarDateRange(new DateTime(2023, 1, 7), new DateTime(2023, 1, 18)), User);
+            Places[6].Take(new CalendarDateRange(new DateTime(2023, 1, 15), new DateTime(2023, 1, 30)), User);
         }
 
         public static User User
@@ -111,8 +103,8 @@ namespace CoworkingMap
             {
                 Image im = (Image)e.Source;
                 int placeNumber = int.Parse(im.Name.Last().ToString());
-                TakePlace(WorkPlaces[placeNumber - 1] as WorkPlace);
-                im.Source = (WorkPlaces[placeNumber - 1] as WorkPlace).ChooseImage();
+                TakePlace(Places[placeNumber - 1]);
+                im.Source = Places[placeNumber - 1].ChooseImage();
             }
             catch (ArgumentOutOfRangeException ex) 
             {
@@ -143,7 +135,7 @@ namespace CoworkingMap
             im.MouseLeftButtonUp += ImagePlace_MouseLeftButtonUp;
             MakeContextMenu(im);
 
-            WorkPlaces.Add(place);
+            Places.Add(place);
             MainGrid.Children.Add(im);
         }
 
@@ -155,17 +147,21 @@ namespace CoworkingMap
             MenuItem menuItem1 = new MenuItem();
             menuItem1.Header = "Изменить";
             MenuItem menuItem2 = new MenuItem();
-            menuItem2.Header = "Переместить";
-            menuItem2.Click += ImagePlaceContextMenuPositionChangeClick;
+            menuItem2.Header = "Удалить";
+            menuItem2.Click += ImagePlaceContextMenuDeleteClick;
             contextMenu.Items.Add(menuItem1);
             contextMenu.Items.Add(menuItem2);
             im.ContextMenu = contextMenu;
         }
 
-        private void ImagePlaceContextMenuPositionChangeClick(object sender, RoutedEventArgs e)
+        private void ImagePlaceContextMenuDeleteClick(object sender, RoutedEventArgs e)
         {
-            ContextMenu cs = (e.Source as MenuItem).Parent as ContextMenu;
-            Image im = cs.PlacementTarget as Image;
+            ContextMenu cm = (e.Source as MenuItem).Parent as ContextMenu;
+            Image im = cm.PlacementTarget as Image;
+            MainGrid.Children.Remove(im);
+            int index = int.Parse(im.Name.Last().ToString()) - 1;
+            Places.RemoveAt(index);
+            // тут ещё нужно будет удалять элемент из базы
         }
     }
 }
