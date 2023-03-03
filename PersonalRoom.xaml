@@ -29,7 +29,16 @@
             </StatusBar>
             <Rectangle HorizontalAlignment="Left" Height="1" Stroke="Black" VerticalAlignment="Top" Width="56" Margin="113,104,0,0"/>
             <Image HorizontalAlignment="Left" Height="52" Margin="10,19,0,0" VerticalAlignment="Top" Width="211" Source="images/Logo.jpg"/>
-
+            <ListView x:Name="listUser" HorizontalAlignment="Left" Height="165" VerticalAlignment="Top" Width="513" Margin="10,227,0,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Image  x:Name="Photo" HorizontalAlignment="Left" Height="110" VerticalAlignment="Top" Width="110" Margin="10,117,0,0" Cursor="">
+            </Image>
+            <Label Content="Личная информация" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,227,0,0" Width="513" Height="25" FontWeight="Bold" FontFamily="/CoworkingMap;component/fonts/#Montserrat"/>
         </Grid>
     </Viewbox>
 </Page>

@@ -10,7 +10,7 @@
 
     <Viewbox Stretch="Fill">
 
-        <Grid Background="White" Height="450" Width="800">
+        <Grid Background="White" Height="450" Width="800" RenderTransformOrigin="1.072,0.586">
             <StatusBar Margin="10,60,95,322" Background="White">
                 <Button Content="Главная" BorderBrush="White" Background="White" Width="65" Height="19" Cursor="Hand" FontFamily="Montserrat SemiBold" Click="main"/>
                 <Button  Height="19" Width="116" Click="Maintoroom" Content="Личный Кабинет" BorderBrush="White" Background="White" Cursor="Hand" FontFamily="Montserrat SemiBold"/>
@@ -29,7 +29,30 @@
             </StatusBar>
             <Image HorizontalAlignment="Left" Height="52" Margin="10,19,0,0" VerticalAlignment="Top" Width="211" Source="images/Logo.jpg"/>
             <Rectangle HorizontalAlignment="Left" Height="1" Stroke="Black" VerticalAlignment="Top" Width="87" Margin="329,104,0,0"/>
-
+            <ListView x:Name="listOfDate" HorizontalAlignment="Left" Height="312" VerticalAlignment="Top" Width="243" Margin="10,128,0,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ListView x:Name="listOfBooking" HorizontalAlignment="Left" Height="312" VerticalAlignment="Top" Width="356" Margin="253,128,0,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ListView x:Name="listOfPlace" HorizontalAlignment="Left" Height="312" VerticalAlignment="Top" Width="181" Margin="609,128,0,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Label Content="Дата" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="106,128,0,0" Width="147" Height="25" FontWeight="Bold" FontFamily="/CoworkingMap;component/fonts/#Montserrat"/>
+            <Label Content="Бронирование" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="372,128,0,0" Width="232" Height="25" FontWeight="Bold" FontFamily="/CoworkingMap;component/fonts/#Montserrat"/>
+            <Label Content="Номер места" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="656,128,0,0" Width="134" Height="25" FontWeight="Bold" FontFamily="/CoworkingMap;component/fonts/#Montserrat"/>
         </Grid>
     </Viewbox>
 </Page>

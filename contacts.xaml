@@ -10,7 +10,7 @@
 
     <Viewbox Stretch="Fill">
 
-        <Grid Background="White" Height="450" Width="800">
+        <Grid Background="White" Height="450" Width="800" RenderTransformOrigin="1.103,0.478">
             <StatusBar Margin="10,60,95,322" Background="White">
                 <Button Content="Главная" BorderBrush="White" Background="White" Width="65" Height="19" Cursor="Hand" FontFamily="Montserrat SemiBold" Click="main"/>
                 <Button  Height="19" Width="116" Click="Maintoroom" Content="Личный Кабинет" BorderBrush="White" Background="White" Cursor="Hand" FontFamily="Montserrat SemiBold"/>
@@ -29,7 +29,13 @@
             </StatusBar>
             <Rectangle HorizontalAlignment="Left" Height="1" Stroke="Black" VerticalAlignment="Top" Width="35" Margin="479,104,0,0"/>
             <Image HorizontalAlignment="Left" Height="52" Margin="10,19,0,0" VerticalAlignment="Top" Width="211" Source="/images/Logo.jpg"/>
-
+            <ListView x:Name="listOfHR" HorizontalAlignment="Left" Height="312" VerticalAlignment="Top" Width="287" Margin="10,128,0,0" SelectionChanged="listOfBooking_SelectionChanged">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </Grid>
     </Viewbox>
 </Page>

@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using Microsoft.Data.Sqlite;
 namespace CoworkingMap
 {
     /// <summary>
@@ -22,29 +22,66 @@ namespace CoworkingMap
     public partial class MainPage : Page
     {
         int size = 8;
-        List<WorkPlace> Places; //думаю будет инициалиироваться из базы
-        static User user;
-
-        public MainPage()
+        bool check;
+        List<WorkPlace> Places; //думаю будет инициалиироваться из базы 
+        public MainPage()///не доделал добавление мест из базы
         {
-            InitializeComponent();
+            check = false;
             Places = new List<WorkPlace>();
-            for (int i = 0; i < size; i++)
+            
+            InitializeComponent();
+            using (var connection = new SqliteConnection("Data Source=Numbers.db"))
             {
-                WorkPlace wp = new WorkPlace(i+1);
-                Places.Add(wp);
-                
+                connection.Open();
+                string sqlExpression = "SELECT*FROM Numbers";
+                SqliteCommand command = new SqliteCommand(sqlExpression, connection);
+                command.CommandText = "SELECT*FROM Numbers";
+                using (SqliteDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            int numberPlace = reader.GetInt32(1);
+                            int MarginUpPlace = reader.GetInt32(2);
+                            int MarginLeftPlace = reader.GetInt32(3);
+                            WorkPlace workPlace = new WorkPlace(numberPlace, MarginUpPlace, MarginLeftPlace);
+                            Places.Add(workPlace);
+                        }
+                    }
+                }
             }
-            Places[0].Take(new CalendarDateRange(new DateTime(2023, 1, 8), new DateTime(2023, 1, 12)), User);
-            Places[0].Take(new CalendarDateRange(new DateTime(2023, 1, 20), new DateTime(2023, 1, 21)), User);
-            Places[6].Take(new CalendarDateRange(new DateTime(2023, 1, 15), new DateTime(2023, 1, 30)), User);
+            using (var connection = new SqliteConnection("Data Source=Users.db"))
+            {
+                connection.Open();
+                string sqlExpression = "SELECT*FROM Users";
+                SqliteCommand command = new SqliteCommand(sqlExpression, connection);
+                command.CommandText = "SELECT*FROM Users";
+                using (SqliteDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string booking1 = reader.GetString(6);
+                            string booking2 = reader.GetString(7);
+                            int number = reader.GetInt32(8);
+                            string[] str = booking1.Split('.', ' ');
+                            string[] str2 = booking2.Split('.',' ');
+                            foreach (var item in Places)
+                            {
+                                if (number == item.Number)
+                                { 
+                                item.Take(new CalendarDateRange(new DateTime(int.Parse(str[2]), int.Parse(str[1]), int.Parse(str[0])), new DateTime(int.Parse(str2[2]), int.Parse(str2[1]), int.Parse(str2[0]))));
+                                }
+                            }                         
+                        }
+                    }
+                }
+            }
+            check = true;
         }
 
-        public static User User
-        {
-            get { return user; }
-            set { user = value; }
-        }
 
         private void main(object sender, RoutedEventArgs e)
         {
@@ -80,21 +117,13 @@ namespace CoworkingMap
 
         private void ImageMap_Loaded(object sender, RoutedEventArgs e) // тут нужно красиво сделать
         {
-            ImagePlace1.Source = Places[0].ChooseImage();
-            ImagePlace2.Source = Places[1].ChooseImage();
-            ImagePlace3.Source = Places[2].ChooseImage();
-            ImagePlace4.Source = Places[3].ChooseImage();
-            ImagePlace5.Source = Places[4].ChooseImage();
-            ImagePlace6.Source = Places[5].ChooseImage();
-            ImagePlace7.Source = Places[6].ChooseImage();
-            ImagePlace8.Source = Places[7].ChooseImage();
-
-            //идqи по всем местам и создавать им соответствующий image 
-            // тут должно быть так:
-            /*foreach (WorkPlace item in WorkPlaces)
+            if(check)
+            { 
+            for (int i =0; i<Places.Count;i++)
             {
-                CreateImage(item);
-            }*/
+                CreateImage(Places[i]);
+            }
+            }
         }
 
         private void ImagePlace_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -103,8 +132,15 @@ namespace CoworkingMap
             {
                 Image im = (Image)e.Source;
                 int placeNumber = int.Parse(im.Name.Last().ToString());
-                TakePlace(Places[placeNumber - 1]);
-                im.Source = Places[placeNumber - 1].ChooseImage();
+                foreach (var item in Places)
+                {
+                    if (placeNumber== item.Number)
+                    { 
+                    TakePlace(item);  
+                    im.Source = item.ChooseImage();
+                    }
+                }              
+              
             }
             catch (ArgumentOutOfRangeException ex) 
             {
@@ -135,7 +171,7 @@ namespace CoworkingMap
             im.MouseLeftButtonUp += ImagePlace_MouseLeftButtonUp;
             MakeContextMenu(im);
 
-            Places.Add(place);
+          /*  Places.Add(place);*/
             MainGrid.Children.Add(im);
         }
 
@@ -154,14 +190,37 @@ namespace CoworkingMap
             im.ContextMenu = contextMenu;
         }
 
-        private void ImagePlaceContextMenuDeleteClick(object sender, RoutedEventArgs e)
+        public void ImagePlaceContextMenuDeleteClick(object sender, RoutedEventArgs e)
         {
             ContextMenu cm = (e.Source as MenuItem).Parent as ContextMenu;
             Image im = cm.PlacementTarget as Image;
             MainGrid.Children.Remove(im);
-            int index = int.Parse(im.Name.Last().ToString()) - 1;
-            Places.RemoveAt(index);
-            // тут ещё нужно будет удалять элемент из базы
-        }
+            int number = int.Parse(im.Name.Last().ToString());//надо по циклу сделать нормально
+            int index=-1;
+            foreach (var item in Places)
+            {
+                if (number== item.Number)
+                {
+                    index = Places.IndexOf(item);                   
+                }
+            }
+           using (var connection = new SqliteConnection("Data Source=Numbers.db"))//удаление из базы
+                      {
+                      connection.Open();
+                      string sqlExpression = $"DELETE FROM Numbers WHERE place={Places[index].Number}";
+                       SqliteCommand command = new SqliteCommand(sqlExpression, connection);
+                       command.ExecuteNonQuery();
+                     }
+           /* using (var connection = new SqliteConnection("Data Source=Users.db"))//удаление из базы
+            {
+                connection.Open();
+                string sqlExpression = $"UPDATE Users SET number =NULL WHERE id={WorkPlace.userid} ";
+                SqliteCommand command = new SqliteCommand(sqlExpression, connection);
+                command.ExecuteNonQuery();
+            }*/
+            if (index >= 0)
+                Places.RemoveAt(index);
+                // тут ещё нужно будет удалять элемент из базы
+            }
     }
 }

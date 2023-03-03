@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Data.Sqlite;
 
 namespace CoworkingMap
 {
@@ -19,38 +20,62 @@ namespace CoworkingMap
     /// Логика взаимодействия для Authorization.xaml
     /// </summary>
     public partial class Authorization : Page
-    {
-        AppContext db;
+    {   
+
         public Authorization()
         {
-            InitializeComponent();
-            db = new AppContext();
+            InitializeComponent(); 
         }
-        private void AuthClick(object sender, RoutedEventArgs e)
+        public void AuthClick(object sender, RoutedEventArgs e)//пока нет вывода ошибки неверного ввода
         {
-            try
-            {
-                string login = LoginBox.Text.Trim();
-                string password = PasswordBox.Password.Trim();
-                User AuthUser = null;
-                using (AppContext db = new AppContext())
+            // try
+            // {
+                bool CheckLogPass = false;
+                using (var connection = new SqliteConnection("Data Source=Users.db"))
                 {
-                    AuthUser = db.Users.Where(b => b.Login == login && b.Password == password).FirstOrDefault();
+                connection.Open();
+                    string sqlExpression = "SELECT*FROM Users";
+                    SqliteCommand command = new SqliteCommand(sqlExpression, connection);
+                     //command.CommandText = "SELECT*FROM Users";
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        string login = LoginBox.Text.Trim();
+                        string password = PasswordBox.Password.Trim();
+                       // int id = -1;
+                      //  string l = "";
+                       // string p = "";
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                int id = reader.GetInt32(0);
+                               string  l = reader.GetString(1);
+                                string p = reader.GetString(2);
+
+                                if (login == l && password == p)
+                                {
+                                    MessageBox.Show("Вход успешный!");
+                                    WorkPlace.userid = id;
+                                    CheckLogPass = true;
+                                    NavigationService.Navigate(new MainPage());
+                                    CheckLogPass = true;
+                                    break;
+                                }                               
+                            }                       
+                        }
+                    if (CheckLogPass == false)
+                    {
+                        MessageBox.Show("Ввод неверный!");
+                    }                        
+                    }
                 }
-                if (AuthUser != null)
-                {
-                    MainPage.User = AuthUser; 
-                    // тут должна быть проверка пользователь или админ и грузить соответственное окно
-                    NavigationService.Navigate(new MainPage());
-                }
-                else
-                    throw new Exception("Неверный логин или пароль.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
+                
+        }    
+          //  catch (Exception ex)
+           // {
+          ///      MessageBox.Show(ex.Message);
+           // }
+       // }
     }
 }
 

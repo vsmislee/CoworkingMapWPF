@@ -7,13 +7,13 @@ using System.Windows.Input;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Microsoft.Data.Sqlite;
 namespace CoworkingMap
 {
     public class WorkPlace
     {
         int number;
-        int userid;
+       public static int userid;
         List<CalendarDateRange> takedDates;
         double marginUp;
         double marginLeft;
@@ -23,7 +23,6 @@ namespace CoworkingMap
         public WorkPlace()
         {
             number = 0;
-            userid = 0;
             takedDates = new List<CalendarDateRange>();
             this.marginUp = 100;
             this.marginLeft = 100;
@@ -32,7 +31,6 @@ namespace CoworkingMap
         public WorkPlace(int number)
         {
             this.number = number;
-            userid = 0;
             takedDates = new List<CalendarDateRange>();
             this.marginUp = 100;
             this.marginLeft = 100;
@@ -41,21 +39,15 @@ namespace CoworkingMap
         public WorkPlace(int number, double marginUp, double marginLeft)
         {
             this.number = number;
-            userid = 0;
             takedDates = new List<CalendarDateRange>();
             this.marginUp = marginUp;
             this.marginLeft = marginLeft;
         }
+
         public int Number
         {
             get { return this.number; }
             set { number = value; }
-        }
-
-        public int UserID
-        {
-            get { return this.userid; }
-            set { this.userid = value; }
         }
 
         public List<CalendarDateRange> TakedDates
@@ -91,7 +83,7 @@ namespace CoworkingMap
             return false;
         }
 
-        public void Take(CalendarDateRange takedDate, User user)
+        public void Take(CalendarDateRange takedDate)
         {
             if (this.takedDates == null)
                 takedDates = new List<CalendarDateRange>();
@@ -101,6 +93,7 @@ namespace CoworkingMap
                     throw new Exception("Время брони уже занято.");
             }
             //////////////////////////////////тут ещё нужно добавлять в базу///////////////////////////////////////////////
+            //в WindowSelect.Place прописал
             takedDates.Add(takedDate);
         }
 
