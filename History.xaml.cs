@@ -27,7 +27,7 @@ namespace CoworkingMap
             List<string> DateList = new List<string>();
             List<string> BookingList = new List<string>();
             List<int> PlaceList = new List<int>();
-            using (var connection = new SqliteConnection("Data Source=History.db"))
+            using (var connection = new SqliteConnection("Data Source=History.db"))//чтение из бд
             {
                 connection.Open();
                 string sql = "INSERT INTO History (Date, Booking,Place) VALUES (@Date, @Booking,@Place)";
