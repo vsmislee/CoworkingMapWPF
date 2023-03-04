@@ -29,6 +29,38 @@
             </StatusBar>
             <Image HorizontalAlignment="Left" Height="52" Margin="10,19,0,0" VerticalAlignment="Top" Width="211" Source="/images/Logo.jpg"/>
             <Rectangle HorizontalAlignment="Left" Height="1" Stroke="Black" VerticalAlignment="Top" Width="35" Margin="229,104,0,0"/>
+            <ListView x:Name="listOfUsers" HorizontalAlignment="Left" Height="312" VerticalAlignment="Top" Width="281" Margin="10,128,0,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ListView x:Name="listOfEmail" HorizontalAlignment="Left" Height="312" VerticalAlignment="Top" Width="180" Margin="291,128,0,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ListView x:Name="listOfBooking" HorizontalAlignment="Left" Height="312" VerticalAlignment="Top" Width="287" Margin="471,128,0,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ListView x:Name="listOfNumbers" HorizontalAlignment="Left" Height="312" VerticalAlignment="Top" Width="32" Margin="758,128,0,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Label Content="ФИО" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125,128,0,0" Width="166" Height="25" FontWeight="Bold" FontFamily="/CoworkingMap;component/fonts/#Montserrat"/>
+            <Label Content="Email" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="357,128,0,0" Width="114" Height="25" FontWeight="Bold" FontFamily="/CoworkingMap;component/fonts/#Montserrat"/>
+            <Label Content="Текущее бронирование" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="532,128,0,0" Width="221" Height="25" FontWeight="Bold" FontFamily="/CoworkingMap;component/fonts/#Montserrat"/>
+            <Label Content="№" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="763,128,0,0" Width="27" Height="25" FontWeight="Bold" FontFamily="/CoworkingMap;component/fonts/#Montserrat"/>
 
         </Grid>
     </Viewbox>

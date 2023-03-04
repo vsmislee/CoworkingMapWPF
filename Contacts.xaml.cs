@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using Microsoft.Data.Sqlite;
 namespace CoworkingMap
 {
     /// <summary>
@@ -23,6 +23,34 @@ namespace CoworkingMap
         public Contacts()
         {
             InitializeComponent();
+            List<string> HRList = new List<string>();
+            using (var connection = new SqliteConnection("Data Source=Users.db"))///подключение и чтение 
+            {
+                string sqlExpression = "INSERT INTO Users (FIO, email,telephone,status) VALUES (@FIO, @email,@telephone,@status)";
+                connection.Open();
+                SqliteCommand command = new SqliteCommand(sqlExpression, connection);
+                command.CommandText = "SELECT*FROM Users";
+                using (SqliteDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string status = reader.GetString(12);
+                            if (status == "HR")
+                            {
+                                string HR_Info = "";
+                                string fio = reader.GetString(3);
+                                string telephone = reader.GetString(4);
+                                string email = reader.GetString(5);
+                                HR_Info = "HR-менеджер:" + "\n"+"ФИО: "+fio+"\n" + "Телефон: " + telephone + "\n" + "Email: " + email+"\n\n\n\n";
+                                HRList.Add(HR_Info);
+                            }
+                        }
+                    }
+                }
+            }
+            listOfHR.ItemsSource = HRList;
         }
         private void main(object sender, RoutedEventArgs e)
         {
@@ -47,6 +75,11 @@ namespace CoworkingMap
         private void contacts(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Contacts());
+        }
+
+        private void listOfBooking_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
